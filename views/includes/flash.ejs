@@ -1,0 +1,92 @@
+<% if (success && success.length > 0) { %>
+  <div class="alert alert-success alert-dismissible fade show flash-message" role="alert" id="success-flash">
+    <%= success %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
+
+<% if (error && error.length > 0) { %>
+  <div class="alert alert-danger alert-dismissible fade show flash-message" role="alert" id="error-flash">
+    <%= error %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
+
+
+<!-- cursor -->
+
+<style>
+.flash-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    min-width: 300px;
+    max-width: 600px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateX(-50%) translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
+
+.flash-message.fade-out {
+    animation: slideUp 0.3s ease-in forwards;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-50%) translateY(-100%);
+        opacity: 0;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const flashMessages = document.querySelectorAll('.flash-message');
+    
+    flashMessages.forEach(function(message) {
+        // Auto-dismiss after 3 seconds
+        setTimeout(function() {
+            if (message && message.parentNode) {
+                message.classList.add('fade-out');
+                setTimeout(function() {
+                    if (message && message.parentNode) {
+                        message.remove();
+                    }
+                }, 300);
+            }
+        }, 3000);
+        
+        // Also dismiss on close button click
+        const closeBtn = message.querySelector('.btn-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function() {
+                message.classList.add('fade-out');
+                setTimeout(function() {
+                    if (message && message.parentNode) {
+                        message.remove();
+                    }
+                }, 300);
+            });
+        }
+    });
+});
+</script>
+
+<!-- cursor -->
