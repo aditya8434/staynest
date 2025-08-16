@@ -8,8 +8,8 @@ module.exports.listingSchema = joi.object({
         location: joi.string().required(),
         country: joi.string().required(),
         image: joi.object({
-            filename: joi.string().required(),      // Assuming file uploads
-            url: joi.string().uri().required()      // Valid URL
+            filename: joi.string().allow(''),      // Allow empty filename
+            url: joi.string().uri().allow('')      // Allow empty URL
         }).optional() 
     }).required()
 });

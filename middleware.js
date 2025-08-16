@@ -14,8 +14,11 @@ module.exports.validateListing = (req, res, next) => {
             url: req.file.path
         };
     } else {
-        // If no file is uploaded, check if image data is provided in the body
-        if (!req.body.listing || !req.body.listing.image) {
+        // For edit operations (PUT method), image is optional
+        // For create operations (POST method), image is required if not provided
+        const isEditOperation = req.method === 'PUT';
+        
+        if (!isEditOperation && (!req.body.listing || !req.body.listing.image)) {
             throw new ExpressError("listing.image is required", 400);
         }
     }
